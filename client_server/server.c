@@ -9,7 +9,7 @@
 
 int main() {
 
-  char server_msg[BUFF_SIZE] = "connected to the server";
+  char server_msg[BUFF_SIZE] = "Hey it's me, your favourite server\n";
   int result = 0;
   int server_socket = INVALID_SOCKET;
   struct sockaddr_in server_address;
