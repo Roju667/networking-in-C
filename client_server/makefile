@@ -10,4 +10,4 @@ server : server.c
 	gcc -o server server.c -lws2_32 $(CORE_FLAGS)	
 
 clean:
-	rm *.exe *.o
+	del *.exe *.o $(objects)

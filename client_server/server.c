@@ -11,21 +11,26 @@ int main() {
 
   char server_msg[BUFF_SIZE] = "connected to the server";
   int result = 0;
+  int server_socket = INVALID_SOCKET;
+  struct sockaddr_in server_address;
+  WORD wVersionRequested = MAKEWORD(2, 2);
+  WSADATA wsaData;
 
-  // init server_socket descriptor
-  unsigned int server_socket = INVALID_SOCKET;
+  if (WSAStartup(wVersionRequested, &wsaData) != 0) {
+    perror("WSA Startup error");
+  };
+
   // create socket
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
 
-  if (server_socket == INVALID_SOCKET) {
+  if (INVALID_SOCKET == server_socket) {
     perror("Creating socket error");
     return 1;
   }
 
-  struct sockaddr_in server_address;
   server_address.sin_family = AF_INET;
   server_address.sin_port = htons(9090);
-  server_address.sin_addr.S_un.S_addr = INADDR_ANY;
+  server_address.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
 
   // bind socket to ip and port
   result = bind(server_socket, (struct sockaddr *)&server_address,
@@ -46,7 +51,7 @@ int main() {
 
   send(client_socket, server_msg, sizeof(server_msg), 0);
 
-  close(server_socket);
+  closesocket(server_socket);
 
   return 0;
 }

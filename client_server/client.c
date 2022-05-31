@@ -11,14 +11,13 @@
 int main() {
 
   int result = 0;
+  WORD wVersionRequested = MAKEWORD(2, 2);
   WSADATA wsaData;
 
   // Initialize Winsock
-  result = WSAStartup(MAKEWORD(2, 0), &wsaData);
-  if (result != NO_ERROR) {
-    printf("Error at WSAStartup()\n");
-    return 1;
-  }
+  if (WSAStartup(wVersionRequested, &wsaData) != 0) {
+    perror("WSA Startup error");
+  };
 
   // create socket
   int network_socket = INVALID_SOCKET;
@@ -34,7 +33,7 @@ int main() {
   struct sockaddr_in server_adderss;
   server_adderss.sin_family = AF_INET;
   server_adderss.sin_port = htons(9090);
-  server_adderss.sin_addr.S_un.S_addr = INADDR_ANY;
+  server_adderss.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
 
   int connection_status =
       connect(network_socket, (struct sockaddr *)&server_adderss,
