@@ -7,7 +7,7 @@
 #define BUFF_SIZE 256U
 
 void init_server_address(struct sockaddr_in *server_address);
-bool is_message_quit(const char* message);
+bool is_message_quit(const char *message);
 
 int main()
 {
@@ -69,14 +69,14 @@ int main()
 void init_server_address(struct sockaddr_in *server_address)
 {
     memset((void *)server_address, 0, sizeof(*server_address));
-    server_address->sin_addr.S_un.S_addr = inet_addr("192.168.1.6");
+    server_address->sin_addr.S_un.S_addr = inet_addr("192.168.1.8");
     server_address->sin_family = AF_INET;
     server_address->sin_port = htons(9005);
 
     return;
 }
 
-bool is_message_quit(const char* message)
+bool is_message_quit(const char *message)
 {
     return (strcmp(message, "q\n") == 0 || strcmp(message, "Q\n") == 0);
 }
